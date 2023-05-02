@@ -1,108 +1,57 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { FaBars, FaUserCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+    const [showMenu, setShowMenu] = useState(false);
+
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
+
     return (
-        <nav className="navbar bg-base-100 max-w-7xl mx-auto flex justify-between items-center px-4 w-4/5 top-0">
-            <div className="">
-                <div className="dropdown">
-                    <label tabIndex={0} className="btn btn-ghost lg:hidden">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M4 6h16M4 12h8m-8 6h16"
-                            />
-                        </svg>
-                    </label>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-                    >
-                        <li>
-                            <Link
-                                className="text-[#757575;] font-semibold hover:text-[#7E90FE]"
-                                to="/"
-                            >
-                                Home
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                className="text-[#757575;] font-semibold hover:text-[#7E90FE]"
-                                to="/statistics"
-                            >
-                                Statistics
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                className="text-[#757575;] font-semibold hover:text-[#7E90FE]"
-                                to="/appliedJobs"
-                            >
-                                AppliedJobs
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                className="text-[#757575;] font-semibold hover:text-[#7E90FE]"
-                                to="/blog"
-                            >
-                                Blog
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
-                <Link to="/" className="text-2xl text-[#1A1919;] font-extrabold">
-                    HirePath
+        <nav className="flex items-center justify-between flex-wrap bg-gray-200 px-12 py-4">
+            <div className="flex items-center flex-shrink-0 text-Purple-400 mr-6">
+                <Link to="/">
+                    <span className="font-bold text-2xl tracking-tight">
+                        ThaiKitchen
+                    </span>
                 </Link>
             </div>
-            <div className="hidden lg:flex">
-                <ul className="flex items-center gap-6 px-1">
-                    <li>
-                        <Link
-                            className="text-[#757575;] font-semibold hover:text-[#7E90FE]"
-                            to="/"
-                        >
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            className="text-[#757575;] font-semibold hover:text-[#7E90FE]"
-                            to="/statistics"
-                        >
-                            Chefs
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            className="text-[#757575;] font-semibold hover:text-[#7E90FE]"
-                            to="/appliedJobs"
-                        >
-                            Recipes
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            className="text-[#757575;] font-semibold hover:text-[#7E90FE]"
-                            to="/blog"
-                        >
-                            Blog
-                        </Link>
-                    </li>
-                </ul>
+            <div className="block lg:hidden">
+                <button
+                    className="flex items-center px-3 py-2 border rounded text-slate-700 border-gray-400 hover:text-purple-700 hover:border-white"
+                    onClick={toggleMenu}
+                >
+                    <FaBars className="h-6 w-6" />
+                </button>
             </div>
-            <button className="w-[145px] h-[55px] flex justify-center items-center font-bold text-[17px] rounded-[8px] text-white  bg-violet-600">
-                <Link>Login</Link>
-            </button>
+            <div
+                className={`w-full block flex-grow lg:flex lg:items-center lg:w-auto sm:text-center ${showMenu ? "block" : "hidden"
+                    }`}
+            >
+                <div className="text-lg lg:flex-grow text-center">
+                    <Link
+                        to="/"
+                        className="block font-bold mt-4 lg:inline-block lg:mt-0 text-purple-700 hover:text-slate-600 mr-4"
+                    >
+                        Home
+                    </Link>
+                    <Link
+                        to="/blog"
+                        className="block font-bold mt-4 lg:inline-block lg:mt-0 text-purple-700 hover:text-slate-600 mr-4"
+                    >
+                        Blog
+                    </Link>
+                </div>
+                <div className="flex flex-col items-center lg:flex-row lg:items-center">
+                    <FaUserCircle className="text-slate-700 h-8 w-8 mt-4 lg:mt-0" />
+                    <Link to="/login" className="inline-block px-6 py-4 leading-none border rounded text-slate-100 font-bold hover:text-gray-200 mt-4 lg:mt-0 ml-4 bg-purple-700">
+                        Login
+                    </Link>
+                </div>
+
+            </div>
         </nav>
     );
 };
