@@ -11,9 +11,9 @@ const Navbar = () => {
 
     return (
         <nav className="flex items-center justify-between flex-wrap bg-gray-200 px-12 py-4">
-            <div className="flex items-center flex-shrink-0 text-Purple-400 mr-6">
+            <div className="flex items-center flex-shrink-0 mr-6">
                 <Link to="/">
-                    <span className="font-bold text-2xl tracking-tight">
+                    <span className="text-purple-700 font-bold text-2xl">
                         ThaiKitchen
                     </span>
                 </Link>

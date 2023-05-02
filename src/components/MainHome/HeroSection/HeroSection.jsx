@@ -3,7 +3,7 @@ import React from 'react';
 const HeroSection = () => {
     return (
         <div>
-            <div className="hero pt-24 bg-base-200">
+            <div className="hero pt-24 bg-slate-100">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <img src="https://pngimg.com/uploads/chef/chef_PNG90.png" className="w-50 h-100 rounded-lg" />
                     <div>
