@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroSection = () => {
     return (
-        <div className='hero pt-24 bg-slate-300'>
+        <div className='hero pt-24 bg-purple-100'>
             <div className=" w-5/6 mx-auto">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <img src="https://pngimg.com/uploads/chef/chef_PNG90.png" className="w-50 h-100 rounded-lg" />

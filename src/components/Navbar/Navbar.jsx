@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaBars, FaUserCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = () => {
+    const {user}= useContext(AuthContext)
     const [showMenu, setShowMenu] = useState(false);
-
+ console.log(user)
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
@@ -45,6 +46,9 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="flex flex-col items-center lg:flex-row lg:items-center">
+                    <Link>
+                    {user.displayName}
+                    </Link>
                     <FaUserCircle className="text-slate-700 h-8 w-8 mt-4 lg:mt-0" />
                     <Link to="/login" className="inline-block px-6 py-4 leading-none border rounded text-slate-100 font-bold hover:text-gray-200 mt-4 lg:mt-0 ml-4 bg-purple-700">
                         Login

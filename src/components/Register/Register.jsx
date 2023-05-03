@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const Register = () => {
+  const [error,setError] = useState()
   return (
     <section className="max-w-7xl mx-auto px-4 py-12">
       {/* Component: Card with form */}
