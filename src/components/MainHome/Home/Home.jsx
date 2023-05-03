@@ -3,6 +3,7 @@ import HeroSection from '../HeroSection/HeroSection';
 import { useLoaderData } from 'react-router-dom';
 import Chef from '../../Chef/Chef';
 import FeaturedRecipes from '../../FeaturedRecipes/FeaturedRecipes';
+import Services from '../../Services/Services';
 
 const Home = () => {
     const chefs = useLoaderData()
@@ -24,7 +25,7 @@ const Home = () => {
                 </div>
             </div>
             <FeaturedRecipes></FeaturedRecipes>
-
+            <Services></Services>
         </div>
     );
 };
