@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 const Chef = ({ chef }) => {
     const { id, picture, name, years_experience, num_recipes, likes } = chef
     return (
-        <div className='mt-12 mb-12'>
-            <div className="card bg-purple-100 shadow-xl p-2 h-600">
-                <figure style={{ height: '250px' }}>
-                    <img src={picture} alt="Chef" style={{ width: 'auto', height: '100%', borderRadius: '0.75rem' }} />
+        <div className='mb-12'>
+            <div className="card bg-purple-100 shadow-xl pt-7 h-600">
+                <figure style={{ height: '300px'  }}>
+                    <img src={picture} alt="Chef" style={{ width: '450px', height: '100%', borderRadius: '0.75rem' }} />
                 </figure>
 
                 <div className="card-body items-center text-center">
