@@ -2,7 +2,7 @@ import React from 'react';
 
 const Services = () => {
     return (
-        <div className='bg-gray-800 mt-12 py-6'>
+        <div className='bg-purple-800 mt-12 py-6'>
             <div className="flex flex-col items-center justify-center py-8">
                 <h2 className="text-3xl text-slate-100 font-bold mb-2">What We Offer You</h2>
                 <p className="text-lg text-slate-300 mb-8">Explore the Delightful World of Thai Cuisine with our Recipes, Tips, and Techniques.</p>

@@ -74,14 +74,14 @@ const Navbar = () => {
               />
               <button
                 onClick={handleLogOut}
-                className="btn border-0 text-white bg-success px-4 py-2 font-bold rounded-md flex items-center gap-1"
+                className="btn border-0 text-white bg-purple-700 px-4 py-2 font-bold rounded-md flex items-center gap-1"
               >
                 Logout
               </button>
             </div>
           ) : (
             <Link to="/login">
-              <button className="btn border-0 text-white bg-success px-4 py-2 font-bold rounded-md flex items-center gap-1">
+              <button className="btn border-0 text-white bg-purple-700 px-4 py-2 font-bold rounded-md flex items-center gap-1">
                 Login
               </button>
             </Link>

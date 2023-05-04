@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // import google from "../../../public/icons/google.png";
 // import github from "../../../public/icons/github.png";
 import {
   GithubAuthProvider,
-  GoogleAuthProvider,
+  GoogleAuthProvider, 
   getAuth,
   signInWithPopup,
 } from "firebase/auth";
@@ -18,6 +18,10 @@ const githubProvider = new GithubAuthProvider();
 
 const Login = () => {
   const { singIn } = useContext(AuthContext);
+  const location = useLocation()
+  console.log(location)
+  const from = location.state?.from?.pathname || '/'
+  const navigate = useNavigate()
   const handleLogIn = (e) => {
     e.preventDefault();
 
@@ -36,6 +40,7 @@ const Login = () => {
         const loggedUser = result.user;
         console.log(loggedUser);
         toast.success("User login successfully");
+        navigate(from)
         form.reset();
       })
       .catch((error) => {
@@ -59,6 +64,7 @@ const Login = () => {
           const loggedInGoogleUser = result.user;
           console.log(loggedInGoogleUser);
           toast.success("User login successfully");
+          navigate(from)
         })
         .catch((error) => {
           console.error(error.message);
@@ -77,6 +83,7 @@ const Login = () => {
           const loggedGithubUser = result.user;
           console.log(loggedGithubUser);
           toast.success("User created successfully");
+          navigate(from)
         })
         .catch((error) => {
           console.error(error.message);
