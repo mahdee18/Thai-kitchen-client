@@ -1,14 +1,93 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 // import google from "../../../public/icons/google.png";
 // import github from "../../../public/icons/github.png";
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+} from "firebase/auth";
+import { AuthContext } from "../../Provider/AuthProvider";
+import app from "../../firebase/firebase.config";
+import { ToastContainer, toast } from "react-toastify";
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
 const Login = () => {
+  const { singIn } = useContext(AuthContext);
+  const handleLogIn = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // Check for blank input fields
+    if (!email || !password) {
+      toast.error("A user cannot login empty email and password fields");
+      return;
+    }
+
+    singIn(email, password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        toast.success("User login successfully");
+        form.reset();
+      })
+      .catch((error) => {
+        console.error(error.message);
+        if (error.code === "auth/wrong-password") {
+          toast.error("Incorrect password. Please try again.");
+        } else {
+          toast.error(error.message);
+        }
+      });
+  };
+    // toggle show password
+    const toggleShowPassword = () => {
+      setShowPassword(!showPassword);
+    };
+  
+    // google login
+    const handleWithGoogleSingIn = () => {
+      signInWithPopup(auth, googleProvider)
+        .then((result) => {
+          const loggedInGoogleUser = result.user;
+          console.log(loggedInGoogleUser);
+          toast.success("User login successfully");
+        })
+        .catch((error) => {
+          console.error(error.message);
+          if (error.code === "auth/user-not-found") {
+            toast.error("User not found. Please sign up to continue.");
+          } else {
+            toast.error(error.message);
+          }
+        });
+    };
+  
+    // sign up wiht github
+    const handleWithGithubSingIn = () => {
+      signInWithPopup(auth, githubProvider)
+        .then((result) => {
+          const loggedGithubUser = result.user;
+          console.log(loggedGithubUser);
+          toast.success("User created successfully");
+        })
+        .catch((error) => {
+          console.error(error.message);
+          toast.error(error.message);
+        });
+    };
   return (
     <section className="max-w-7xl mx-auto px-4 py-12">
+       <ToastContainer />
       {/* Component: Card with form */}
-      <form className="max-w-[415px] mx-auto overflow-hidden bg-white rounded shadow-md text-slate-500 shadow-slate-400">
+      <form onSubmit={handleLogIn} className="max-w-[415px] mx-auto overflow-hidden bg-white rounded shadow-md text-slate-500 shadow-slate-400">
         {/* Body*/}
         <div className="p-6">
           <header className="mb-4 text-center">
@@ -18,9 +97,9 @@ const Login = () => {
             {/* Input field */}
             <div className="relative my-6">
               <input
-                id="id-b03"
+                id="email"
                 type="email"
-                name="id-b03"
+                name="email"
                 placeholder="your name"
                 className="relative w-full h-10 px-4 text-sm placeholder-transparent transition-all border rounded outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-purple-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
               />
@@ -37,9 +116,9 @@ const Login = () => {
             {/* Input field */}
             <div className="relative my-6">
               <input
-                id="id-b13"
+                id="password"
                 type="password"
-                name="id-b13"
+                name="password"
                 placeholder="your password"
                 className="relative w-full h-10 px-4 pr-12 text-sm placeholder-transparent transition-all border rounded outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-purple-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
               />
@@ -89,13 +168,13 @@ const Login = () => {
           <span className="my-0 mx-[10px] font-bold text-slate-700">or</span>
           <hr className="flex-1 border-t border-slate-400" />
         </div>
-        <div className="flex items-center justify-center gap-[6px] w-ful; mx-6 h-[50px] border border-slate-600 rounded-md cursor-pointer">
+        <div onClick={handleWithGoogleSingIn} className="flex items-center justify-center gap-[6px] w-ful; mx-6 h-[50px] border border-slate-600 rounded-md cursor-pointer">
           {/* <img  src={google} alt="" /> */}
           <FaGoogle className="w-7 h-7 rounded-md"></FaGoogle>
           <span>Continue with Google</span>
         </div>
 
-        <div className="flex items-center justify-center gap-[6px] w-ful; mx-6 h-[50px] border border-slate-700 rounded-md cursor-pointer mt-3 mb-7">
+        <div onClick={handleWithGithubSingIn} className="flex items-center justify-center gap-[6px] w-ful; mx-6 h-[50px] border border-slate-700 rounded-md cursor-pointer mt-3 mb-7">
           <FaGithub className="w-8 h-8 rounded-md"></FaGithub>
           <span>Continue with Github</span>
         </div>

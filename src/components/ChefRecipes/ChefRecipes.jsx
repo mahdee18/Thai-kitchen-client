@@ -1,8 +1,13 @@
-import React from 'react';
-import { HiOutlineHeart } from 'react-icons/hi';
+import React, { useState } from 'react';
+import { HiHeart, HiOutlineHeart } from 'react-icons/hi';
 
 const ChefRecipes = ({ recipe }) => {
-    const { recipe_name, ingredients, method, recipe_rating, favorite, recipe_image } = recipe;
+    const { recipe_name, ingredients, method, recipe_rating, recipe_image } = recipe;
+    const [favorite, setFavorite] = useState(false)
+
+    const handleFav = () => {
+        setFavorite(true)
+    }
     return (
         <div className="max-w-3xl mx-auto">
             <div className="hero min-h-screen bg-base-200 mb-8">
@@ -15,9 +20,11 @@ const ChefRecipes = ({ recipe }) => {
 
                         <div className="flex items-center justify-between">
                             <p><strong>Ratings:</strong>  {recipe_rating}</p>
-                            <button>
+                           { !favorite ?
+                            <button onClick={handleFav}>
                                 <HiOutlineHeart></HiOutlineHeart>
-                            </button>
+                            </button> :
+                                <HiHeart></HiHeart>}
                         </div>
                     </div>
                 </div>

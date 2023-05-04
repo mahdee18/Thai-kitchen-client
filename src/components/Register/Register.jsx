@@ -1,13 +1,99 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { AuthContext } from "../../Provider/AuthProvider";
+import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup, updateProfile } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import app from "../../firebase/firebase.config";
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
 const Register = () => {
-  const [error,setError] = useState()
+  const { createUser } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSingUp = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const displayName = form.displayName.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const photoUrl = form.photoUrl.value;
+
+    // Password validation regex pattern
+    const passwordRegex = /^.{6,}$/;
+
+    // Check for blank input fields
+    if (!displayName || !email || !password || !photoUrl) {
+      toast.error("A user cannot submit empty email and password fields");
+      return;
+    }
+
+    if (!passwordRegex.test(password)) {
+      toast.error("The password is less than 6 characters");
+      return;
+    }
+
+    createUser(email, password, displayName, photoUrl)
+      .then((result) => {
+        // User created successfully, update profile
+        const loggedUser = result.user;
+        return updateProfile(loggedUser, {
+          displayName: displayName,
+          photoURL: photoUrl,
+        }).then(() => {
+          console.log("Profile updated successfully");
+          console.log(loggedUser);
+          toast.success("User created successfully");
+          form.reset();
+        });
+      })
+      .catch((error) => {
+        console.error("Error creating user:", error.message);
+        toast.error(error.message);
+      });
+  };
+
+  // toggle show password
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  // sign up with google
+  const handleWithGoogleSingUp = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const loggedGoogleUser = result.user;
+        console.log(loggedGoogleUser);
+        toast.success("User created successfully");
+      })
+      .catch((error) => {
+        console.error(error.message);
+        toast.error(error.message);
+      });
+  };
+
+  // sign up wiht github
+  const handleWithGithubSingUp = () => {
+    signInWithPopup(auth, githubProvider)
+      .then((result) => {
+        const loggedGithubUser = result.user;
+        console.log(loggedGithubUser);
+        toast.success("User created successfully");
+      })
+      .catch((error) => {
+        console.error(error.message);
+        toast.error(error.message);
+      });
+  };
   return (
     <section className="max-w-7xl mx-auto px-4 py-12">
+      <ToastContainer />
       {/* Component: Card with form */}
-      <form className="max-w-[415px] mx-auto overflow-hidden bg-white rounded shadow-md text-slate-500 shadow-slate-200">
+      <form onSubmit={handleSingUp} className="max-w-[415px] mx-auto overflow-hidden bg-white rounded shadow-md text-slate-500 shadow-slate-200">
         {/* Body*/}
         <div className="p-6">
           <header className="mb-4 text-center">
@@ -17,9 +103,9 @@ const Register = () => {
             {/* Input field */}
             <div className="relative my-6">
               <input
-                id="name"
+                id="displayName"
                 type="text"
-                name="name"
+                name="displayName"
                 placeholder="Your name"
                 className="relative w-full h-10 px-4 text-sm placeholder-transparent transition-all border rounded outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-purple-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
               />
@@ -35,9 +121,9 @@ const Register = () => {
             </div>
             <div className="relative my-6">
               <input
-                id="id-b03"
+                id="email"
                 type="email"
-                name="id-b03"
+                name="email"
                 placeholder="your name"
                 className="relative w-full h-10 px-4 text-sm placeholder-transparent transition-all border rounded outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-purple-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
               />
@@ -54,9 +140,9 @@ const Register = () => {
             {/* Input field */}
             <div className="relative my-6">
               <input
-                id="id-b13"
-                type="password"
-                name="id-b13"
+                id="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
                 placeholder="your password"
                 className="relative w-full h-10 px-4 pr-12 text-sm placeholder-transparent transition-all border rounded outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-purple-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
               />
@@ -67,9 +153,10 @@ const Register = () => {
                 Your password
               </label>
               <svg
+                onClick={toggleShowPassword}
                 xmlns="http://www.w3.org/2000/svg"
                 className="absolute top-2.5 right-4 h-5 w-5 stroke-slate-400 cursor-pointer peer-disabled:cursor-not-allowed"
-                fill="none"
+                fill={showPassword ? "none" : "currentColor"}
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth="1.5"
@@ -88,7 +175,7 @@ const Register = () => {
               <input
                 id="photoUrl"
                 type="text"
-                name="photo-url"
+                name="photoUrl"
                 placeholder="Your photo url"
                 className="relative w-full h-10 px-4 text-sm placeholder-transparent transition-all border rounded outline-none peer border-slate-200 text-slate-500 autofill:bg-white invalid:border-pink-500 invalid:text-pink-500 focus:border-purple-500 focus:outline-none invalid:focus:border-pink-500 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
               />
@@ -124,13 +211,13 @@ const Register = () => {
           <span className="my-0 mx-[10px] font-bold text-slate-400">or</span>
           <hr className="flex-1 border-t border-slate-400" />
         </div>
-        <div className="flex items-center justify-center gap-[6px] w-ful; mx-6 h-[50px] border border-slate-400 rounded-md cursor-pointer">
-        <FaGoogle className="w-7 h-7 rounded-md"></FaGoogle>
-        <span>Continue with Google</span>
+        <div onClick={handleWithGoogleSingUp} className="flex items-center justify-center gap-[6px] w-ful; mx-6 h-[50px] border border-slate-400 rounded-md cursor-pointer">
+          <FaGoogle className="w-7 h-7 rounded-md"></FaGoogle>
+          <span>Continue with Google</span>
         </div>
 
-        <div className="flex items-center justify-center gap-[6px] w-ful; mx-6 h-[50px] border border-slate-200 rounded-md cursor-pointer mt-3 mb-7">
-        <FaGithub className="w-8 h-8 rounded-md"></FaGithub>
+        <div onClick={handleWithGithubSingUp} className="flex items-center justify-center gap-[6px] w-ful; mx-6 h-[50px] border border-slate-200 rounded-md cursor-pointer mt-3 mb-7">
+          <FaGithub className="w-8 h-8 rounded-md"></FaGithub>
           <span>Continue with Github</span>
         </div>
       </form>

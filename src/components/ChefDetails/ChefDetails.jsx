@@ -16,13 +16,15 @@ const ChefDetails = () => {
                             <img src={picture} className="w-4/5 max-w-sm rounded-lg shadow-lg" alt={name} />
                         </div>
                         <div className="flex flex-col justify-between">
-                            <div className="text-center lg:text-left">
+                            <div className="text-center mx-auto ">
                                 <h2 className="text-4xl font-bold">{name}</h2>
                                 <p className="text-lg py-4">{bio}</p>
                                 <div className='flex items-center justify-center gap-12 py-2'>
                                     <span className='flex items-center'><FaRegThumbsUp className='mr-2'></FaRegThumbsUp>   {likes}</span>
                                     <span className='flex items-center'><strong><FaHamburger className='mr-2'></FaHamburger> </strong>   {num_recipes} of recipes.</span>
+
                                 </div>
+                                <span className='flex items-center justify-center gap-2'><FaCalendarAlt className=''></FaCalendarAlt>  {years_experience} Years of experiences working as a chef.</span>
                             </div>
                             <div className="text-center mt-4">
                                 <Link to="/">
