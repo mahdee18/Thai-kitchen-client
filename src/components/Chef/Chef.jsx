@@ -7,8 +7,8 @@ const Chef = ({ chef }) => {
     return (
         <div className='mb-12'>
             <div className="card bg-purple-100 shadow-xl pt-7 h-600">
-                <figure style={{ height: '300px'  }}>
-                    <img src={picture} alt="Chef" style={{ width: '450px', height: '100%', borderRadius: '0.75rem' }} />
+                <figure style={{ height: '300px' }}>
+                    <img src={picture} alt="Chef" style={{ width: '450px', height: '100%', borderRadius: '0.75rem' }} loading="lazy" />
                 </figure>
 
                 <div className="card-body items-center text-center">
@@ -26,6 +26,7 @@ const Chef = ({ chef }) => {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 };
