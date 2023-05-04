@@ -1,14 +1,18 @@
 import React from 'react';
 import { FaCalendarAlt, FaHamburger, FaRegThumbsUp } from 'react-icons/fa';
+import LazyLoad from "react-lazy-load";
 import { Link } from 'react-router-dom';
 
 const Chef = ({ chef }) => {
     const { id, picture, name, years_experience, num_recipes, likes } = chef
     return (
         <div className='mb-12'>
-            <div className="card bg-purple-100 shadow-xl pt-7 h-600">
+            <div className="card bg-purple-100 shadow-xl h-600">
                 <figure style={{ height: '300px' }}>
-                    <img src={picture} alt="Chef" style={{ width: '450px', height: '100%', borderRadius: '0.75rem' }} loading="lazy" />
+
+                    <LazyLoad threshold={0.95} offset={300} className="h-full LazyLoad " >
+                        <img src={picture} />
+                    </LazyLoad>
                 </figure>
 
                 <div className="card-body items-center text-center">

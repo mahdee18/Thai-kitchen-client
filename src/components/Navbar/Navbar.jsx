@@ -29,7 +29,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="flex items-center justify-between flex-wrap bg-gray-200 px-12 py-4">
+        <nav className="flex items-center justify-between flex-wrap bg-purple-200 px-12 py-4">
             <div className="flex items-center flex-shrink-0 mr-6">
                 <Link to="/">
                     <span className="text-purple-700 font-bold text-2xl">
