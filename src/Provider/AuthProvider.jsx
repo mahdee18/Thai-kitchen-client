@@ -49,7 +49,7 @@ const AuthProviders = ({ children }) => {
     const unsubsribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
-      // stop observbing while unmounting
+      // stop observing while unmounting
       return () => {
         return unsubsribe();
       };

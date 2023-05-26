@@ -1,11 +1,10 @@
 import { useContext, useState } from "react";
-import { FaBars, FaUserCircle } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
-    console.log(user);
     const handleLogOut = () => {
       logOut()
         .then(() => {

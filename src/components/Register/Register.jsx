@@ -67,7 +67,6 @@ const Register = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         const loggedGoogleUser = result.user;
-        console.log(loggedGoogleUser);
         toast.success("User created successfully");
       })
       .catch((error) => {
@@ -76,7 +75,7 @@ const Register = () => {
       });
   };
 
-  // sign up wiht github
+  // sign up with github
   const handleWithGithubSingUp = () => {
     signInWithPopup(auth, githubProvider)
       .then((result) => {
@@ -195,7 +194,7 @@ const Register = () => {
         <div className="flex justify-end p-6 -mt-5">
           <button
             type="submit"
-            className="btn border-0 inline-flex items-center justify-center w-full h-10 gap-2 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-purple-700 disabled:cursor-not-allowed disabled:borde"
+            className="btn border-0 inline-flex items-center justify-center w-full h-10 gap-2 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-purple-700 disabled:cursor-not-allowed disabled:border"
           >
             <span>Register</span>
           </button>

@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-// import google from "../../../public/icons/google.png";
-// import github from "../../../public/icons/github.png";
 import {
   GithubAuthProvider,
-  GoogleAuthProvider, 
+  GoogleAuthProvider,  
   getAuth,
   signInWithPopup,
 } from "firebase/auth";
@@ -22,10 +20,10 @@ const Login = () => {
   console.log(location)
   const from = location.state?.from?.pathname || '/'
   const navigate = useNavigate()
-  const handleLogIn = (e) => {
-    e.preventDefault();
+  const handleLogIn = (event) => {
+    event.preventDefault();
 
-    const form = e.target;
+    const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
 
@@ -188,7 +186,7 @@ const Login = () => {
       </form>
       {/* End Card with form */}
     </section>
-  );
+  ); 
 };
 
 export default Login;
